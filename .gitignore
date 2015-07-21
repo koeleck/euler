@@ -22,6 +22,12 @@
 *.a
 *.lib
 
+*~
+.*.swp
+.*.pyc
+build/
+run
+
 # Executables
 *.exe
 *.out
