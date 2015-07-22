@@ -1,4 +1,4 @@
-.PHONY: all clean depend
+.PHONY: all common clean depend
 
 CXX = g++
 CXXFLAGS = -std=c++14 -O2 -g
@@ -16,13 +16,14 @@ MAKEDEPEND = mkdir -p $(OBJDIR); \
 				$(CXX) $(INCLUDE) $(CXXFLAGS) -MM $^ -MF $@.dep; \
 				sed -i 's|^\(.*\.o\)|$(OBJDIR)/\1|g' $@.dep;
 
-all: run
+all: common run
 
-objs: $(OBJS)
+common:
+	@cd ../common; make objs
 
 -include $(DEPS)
 
-run: $(OBJS)
+run: $(OBJS) ../common/build/sieve.o
 	@$(CXX) -o $@ $^ $(LDFLAGS) $(LIBS)
 
 $(OBJDIR)/%.o: %.cpp
@@ -30,4 +31,5 @@ $(OBJDIR)/%.o: %.cpp
 	@$(CXX) -c $< -o $@ $(CXXFLAGS) $(INCLUDE)
 
 clean:
+	@cd ../common; make clean
 	@rm -rf ./run $(OBJDIR)
