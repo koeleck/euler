@@ -1,8 +1,8 @@
-.PHONY: all clean depend
+.PHONY: all common clean depend
 
 CXX = g++
 CXXFLAGS = -std=c++14 -O2 -g
-INCLUDE =
+INCLUDE = -I../common
 LDFLAGS =
 LIBS =
 
@@ -16,15 +16,20 @@ MAKEDEPEND = mkdir -p $(OBJDIR); \
 				$(CXX) $(INCLUDE) $(CXXFLAGS) -MM $^ -MF $@.dep; \
 				sed -i 's|^\(.*\.o\)|$(OBJDIR)/\1|g' $@.dep;
 
-all: objs
+all: common run
 
-objs: $(OBJS)
+common:
+	@cd ../common; make objs
 
 -include $(DEPS)
+
+run: $(OBJS)
+	@$(CXX) -o $@ $^ $(LDFLAGS) $(LIBS)
 
 $(OBJDIR)/%.o: %.cpp
 	@$(MAKEDEPEND)
 	@$(CXX) -c $< -o $@ $(CXXFLAGS) $(INCLUDE)
 
 clean:
+	@cd ../common; make clean
 	@rm -rf ./run $(OBJDIR)

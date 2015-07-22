@@ -23,7 +23,7 @@ common:
 
 -include $(DEPS)
 
-run: $(OBJS) ../common/build/sieve.o
+run: $(OBJS) ../common/build/primes.o
 	@$(CXX) -o $@ $^ $(LDFLAGS) $(LIBS)
 
 $(OBJDIR)/%.o: %.cpp

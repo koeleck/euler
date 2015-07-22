@@ -5,10 +5,7 @@
 #include <climits>
 #include <memory>
 
-#include "../common/sieve.h"
-
-#include <iostream>
-#include <iomanip>
+#include "primes.h"
 
 std::vector<unsigned long long> getPrimes(const unsigned long long to)
 {
@@ -24,14 +21,13 @@ std::vector<unsigned long long> getPrimes(const unsigned long long to)
     const auto max = 3 + 2 * size * bpe;
 
     // estimate number of primes:
-    //std::cout << "estimated number: " << std::fixed << (max / std::log(max)) << '\n';
-    //result.reserve(max / std::log(max));
+    result.reserve(static_cast<std::size_t>( 1.01 * max / std::log(max)));
 
-    std::cout << "allocate " << ((size * sizeof(element_type) / 1024 / 1024)) << "MiB\n";
     std::unique_ptr<element_type[]>  bits{new element_type[size]};
     std::memset(bits.get(), 0, size * sizeof(element_type));
 
     result.emplace_back(2);
+
     for (unsigned long long i = 0; i < num_bits; ++i) {
         unsigned long long idx = i / bpe;
         unsigned long long bit = i % bpe;
@@ -40,7 +36,6 @@ std::vector<unsigned long long> getPrimes(const unsigned long long to)
             continue;
         const auto num = 3 + 2 * i;
         result.emplace_back(num);
-        std::cout << "size: " << result.size() << ", capacity: " << result.capacity() << '\n';
 
         do {
             bits[idx] |= static_cast<element_type>(1)<<bit;
