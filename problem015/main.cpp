@@ -1,35 +1,30 @@
 #include <iostream>
-#include <future>
+#include <cstring>
 
+
+constexpr int grid_size = 20;
+//constexpr int grid_size = 2;
+
+unsigned long int num_steps[grid_size + 1][grid_size + 1];
 
 unsigned long int foo(int x, int y)
 {
-    constexpr int grid_size = 20;
-    constexpr int len = grid_size;
-
-    if (x == len && y == len)
+    if (x == grid_size && y == grid_size)
         return 1;
 
-    unsigned long int result = 0;
-    if (x < 2 && y < 2) {
-        int num_futures = 0;
-        std::future<unsigned long int> res[2];
-        if (x < len)
-            res[num_futures++] = std::async(std::launch::async, foo, x + 1, y);
-        if (y < len)
-            res[num_futures] = std::async(std::launch::async, foo, x, y + 1);
-        for (int i = 0; i < num_futures; ++i)
-            result += res[i].get();
-    } else {
-        if (x < len)
+    if (num_steps[x][y] == 0) {
+        unsigned long int result = 0;
+        if (x < grid_size)
             result += foo(x + 1, y);
-        if (y < len)
+        if (y < grid_size)
             result += foo(x, y + 1);
+        num_steps[x][y] = result;
     }
-    return result;
+    return num_steps[x][y];
 }
 
 int main()
 {
+    std::memset(num_steps, 0, grid_size * grid_size * sizeof(decltype(num_steps[0][0])));
     std::cout << "result: " << foo(0, 0) << '\n';
 }
