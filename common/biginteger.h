@@ -204,6 +204,11 @@ public:
         return *this;
     }
 
+    std::size_t sizeInBase(const int base) const
+    {
+        return mpz_sizeinbase(m_value, base);
+    }
+
 private:
     friend BigInteger operator+(const BigInteger&, const BigInteger&);
     friend BigInteger operator+(const BigInteger&, unsigned long int);
