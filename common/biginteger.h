@@ -244,6 +244,39 @@ private:
     friend bool operator==(const BigInteger&, unsigned long int);
     friend bool operator==(unsigned long int, const BigInteger&);
 
+    friend bool operator<(const BigInteger&, const BigInteger&);
+    friend bool operator<(const BigInteger&, double);
+    friend bool operator<(double, const BigInteger&);
+    friend bool operator<(const BigInteger&, long int);
+    friend bool operator<(long int, const BigInteger&);
+    friend bool operator<(const BigInteger&, unsigned long int);
+    friend bool operator<(unsigned long int, const BigInteger&);
+
+    friend bool operator<=(const BigInteger&, const BigInteger&);
+    friend bool operator<=(const BigInteger&, double);
+    friend bool operator<=(double, const BigInteger&);
+    friend bool operator<=(const BigInteger&, long int);
+    friend bool operator<=(long int, const BigInteger&);
+    friend bool operator<=(const BigInteger&, unsigned long int);
+    friend bool operator<=(unsigned long int, const BigInteger&);
+
+    friend bool operator>(const BigInteger&, const BigInteger&);
+    friend bool operator>(const BigInteger&, double);
+    friend bool operator>(double, const BigInteger&);
+    friend bool operator>(const BigInteger&, long int);
+    friend bool operator>(long int, const BigInteger&);
+    friend bool operator>(const BigInteger&, unsigned long int);
+    friend bool operator>(unsigned long int, const BigInteger&);
+
+    friend bool operator>=(const BigInteger&, const BigInteger&);
+    friend bool operator>=(const BigInteger&, double);
+    friend bool operator>=(double, const BigInteger&);
+    friend bool operator>=(const BigInteger&, long int);
+    friend bool operator>=(long int, const BigInteger&);
+    friend bool operator>=(const BigInteger&, unsigned long int);
+    friend bool operator>=(unsigned long int, const BigInteger&);
+
+
     mpz_t   m_value;
 };
 
@@ -470,5 +503,156 @@ bool operator!=(unsigned long int op0, const BigInteger& op1)
     return !(op0 == op1);
 }
 
+//
+// operator<
+//
+bool operator<(const BigInteger& op0, const BigInteger& op1)
+{
+    return 0 > mpz_cmp(op0.m_value, op1.m_value);
+}
+
+bool operator<(const BigInteger& op0, double op1)
+{
+    return 0 > mpz_cmp_d(op0.m_value, op1);
+}
+
+bool operator<(double op0, const BigInteger& op1)
+{
+    return 0 < mpz_cmp_d(op1.m_value, op0);
+}
+
+bool operator<(const BigInteger& op0, long int op1)
+{
+    return 0 > mpz_cmp_si(op0.m_value, op1);
+}
+
+bool operator<(long int op0, const BigInteger& op1)
+{
+    return 0 < mpz_cmp_si(op1.m_value, op0);
+}
+
+bool operator<(const BigInteger& op0, unsigned long int op1)
+{
+    return 0 > mpz_cmp_ui(op0.m_value, op1);
+}
+
+bool operator<(unsigned long int op0, const BigInteger& op1)
+{
+    return 0 < mpz_cmp_ui(op1.m_value, op0);
+}
+
+//
+// operator<=
+//
+bool operator<=(const BigInteger& op0, const BigInteger& op1)
+{
+    return 0 >= mpz_cmp(op0.m_value, op1.m_value);
+}
+
+bool operator<=(const BigInteger& op0, double op1)
+{
+    return 0 >= mpz_cmp_d(op0.m_value, op1);
+}
+
+bool operator<=(double op0, const BigInteger& op1)
+{
+    return 0 <= mpz_cmp_d(op1.m_value, op0);
+}
+
+bool operator<=(const BigInteger& op0, long int op1)
+{
+    return 0 >= mpz_cmp_si(op0.m_value, op1);
+}
+
+bool operator<=(long int op0, const BigInteger& op1)
+{
+    return 0 <= mpz_cmp_si(op1.m_value, op0);
+}
+
+bool operator<=(const BigInteger& op0, unsigned long int op1)
+{
+    return 0 >= mpz_cmp_ui(op0.m_value, op1);
+}
+
+bool operator<=(unsigned long int op0, const BigInteger& op1)
+{
+    return 0 <= mpz_cmp_ui(op1.m_value, op0);
+}
+
+//
+// operator>
+//
+bool operator>(const BigInteger& op0, const BigInteger& op1)
+{
+    return 0 < mpz_cmp(op0.m_value, op1.m_value);
+}
+
+bool operator>(const BigInteger& op0, double op1)
+{
+    return 0 < mpz_cmp_d(op0.m_value, op1);
+}
+
+bool operator>(double op0, const BigInteger& op1)
+{
+    return 0 > mpz_cmp_d(op1.m_value, op0);
+}
+
+bool operator>(const BigInteger& op0, long int op1)
+{
+    return 0 < mpz_cmp_si(op0.m_value, op1);
+}
+
+bool operator>(long int op0, const BigInteger& op1)
+{
+    return 0 > mpz_cmp_si(op1.m_value, op0);
+}
+
+bool operator>(const BigInteger& op0, unsigned long int op1)
+{
+    return 0 < mpz_cmp_ui(op0.m_value, op1);
+}
+
+bool operator>(unsigned long int op0, const BigInteger& op1)
+{
+    return 0 > mpz_cmp_ui(op1.m_value, op0);
+}
+
+//
+// operator>=
+//
+bool operator>=(const BigInteger& op0, const BigInteger& op1)
+{
+    return 0 <= mpz_cmp(op0.m_value, op1.m_value);
+}
+
+bool operator>=(const BigInteger& op0, double op1)
+{
+    return 0 <= mpz_cmp_d(op0.m_value, op1);
+}
+
+bool operator>=(double op0, const BigInteger& op1)
+{
+    return 0 >= mpz_cmp_d(op1.m_value, op0);
+}
+
+bool operator>=(const BigInteger& op0, long int op1)
+{
+    return 0 <= mpz_cmp_si(op0.m_value, op1);
+}
+
+bool operator>=(long int op0, const BigInteger& op1)
+{
+    return 0 >= mpz_cmp_si(op1.m_value, op0);
+}
+
+bool operator>=(const BigInteger& op0, unsigned long int op1)
+{
+    return 0 <= mpz_cmp_ui(op0.m_value, op1);
+}
+
+bool operator>=(unsigned long int op0, const BigInteger& op1)
+{
+    return 0 >= mpz_cmp_ui(op1.m_value, op0);
+}
 
 #endif // EULER_COMMON_BIGINTEGER_H
