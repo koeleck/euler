@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 
-#include "../common/math.h"
+#include "../common/misc.h"
 
 int main()
 {

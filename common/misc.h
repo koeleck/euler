@@ -2,6 +2,7 @@
 #define EULER_COMMON_MATH_H
 
 #include <type_traits>
+#include <cmath>
 
 template <typename T, typename P>
 typename std::enable_if<std::is_integral<P>::value, T>::type
