@@ -1,6 +1,8 @@
 #ifndef EULER_COMMON_DIGITS_H
 #define EULER_COMMON_DIGITS_H
 
+#include <vector>
+
 template <typename T>
 class DigitIterator
 {
@@ -57,6 +59,29 @@ template <typename T>
 DigitsOfANumber<T> digits(T value)
 {
     return DigitsOfANumber<T>(value);
+}
+
+template <typename T>
+std::vector<unsigned char> getDigits(T value)
+{
+    if (value < static_cast<T>(0))
+        value = -value;
+    std::vector<unsigned char> result;
+    do {
+        result.emplace_back(value % 10);
+        value /= 10;
+    } while (value != 0);
+    return result;
+}
+
+template <typename T>
+T digitsToNum(const std::vector<unsigned char>& digits)
+{
+    T result = 0;
+    for (auto it = digits.rbegin(); it != digits.rend(); ++it) {
+        result = result * 10 + *it;
+    }
+    return result;
 }
 
 #endif // EULER_COMMON_DIGITS_H
