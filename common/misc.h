@@ -32,4 +32,16 @@ T gcd(T a, T b)
     return a;
 }
 
+template <typename T>
+T factorial(T n)
+{
+    assert(n >= static_cast<T>(0));
+    T result = 1;
+    while (n > 1) {
+        result *= n;
+        --n;
+    }
+    return result;
+}
+
 #endif // EULER_COMMON_MATH_H
