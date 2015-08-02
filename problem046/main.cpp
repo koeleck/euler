@@ -1,23 +1,26 @@
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 #include "../common/primes.h"
 
 std::vector<unsigned long long int> primes;
 
-bool check(unsigned long long int value)
+bool check(const unsigned long long int value)
 {
-    for (const auto prime : primes) {
-        if (prime > value)
-            break;
+    const auto start = std::lower_bound(primes.begin(), primes.end(), value);
+    auto it = std::vector<unsigned long long int>::reverse_iterator(start);
 
-        const auto rem = value - prime / 2;
-
-        const auto o = std::sqrt(rem);
-
-        if (prime + 2 * o * o == value)
+    for (; it != primes.rend(); ++it) {
+        const auto prime = *it;
+        auto rem = value - prime;
+        if (rem % 2 != 0)
+            continue;
+        rem /= 2;
+        const auto o = static_cast<unsigned long long int>(std::round(std::sqrt(rem)));
+        if (o*o == rem)
             return true;
     }
-    return true;
+    return false;
 }
 
 int main()
@@ -26,19 +29,19 @@ int main()
     primes = getPrimes(m);
 
     const std::size_t s = primes.size();
-    unsigned long long int p0 = primes[0];
-    unsigned long long int p1 = primes[1];
-    unsigned int next = 2;
+    unsigned long long int p0;
+    unsigned long long int p1 = primes[0];
+    unsigned int next = 1;
 
     do {
+        p0 = p1;
+        p1 = primes[next++];
         for (unsigned long long int i = p0 + 2; i < p1; i += 2) {
             if (!check(i)) {
                 std::cout << "result: " << i << '\n';
                 return 0;
             }
         }
-        p0 = p1;
-        p1 = primes[next++];
     } while (next < s);
     std::cout << "not found!\n";
 }
